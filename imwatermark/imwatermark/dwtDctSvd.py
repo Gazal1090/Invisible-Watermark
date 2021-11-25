@@ -1,15 +1,13 @@
 import numpy as np
-import copy
 import cv2
 import pywt
-import math
 import pprint
 
 pp = pprint.PrettyPrinter(indent=2)
 
 
 class EmbedDwtDctSvd(object):
-    def __init__(self, watermarks=[], wmLen=8, scales=[0,36,0], block=4):
+    def __init__(self, watermarks=[], wmLen = 8, scales=[0, 36, 0], block=4):
         self._watermarks = watermarks
         self._wmLen = wmLen
         self._scales = scales
@@ -77,12 +75,8 @@ class EmbedDwtDctSvd(object):
         u, s, v = np.linalg.svd(cv2.dct(block))
 
         score = 0
-        score = int ((s[0] % scale) > scale * 0.5)
+        score = int((s[0] % scale) > scale * 0.5)
         return score
-        if score >= 0.5:
-            return 1.0
-        else:
-            return 0.0
 
     def encode_frame(self, frame, scale):
         '''
